@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Тренажер: заявление на возмещение расходов на охрану труда — составляем и проверяем</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:100vw;height:100vh;overflow:hidden;background:#e8edf5}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:#14283f;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  :root{
+    --navy:#123e6b;--navy-deep:#0c2c4e;--teal:#00a184;--teal-dk:#00795f;
+    --ink:#14283f;--muted:#5c738c;--line:#d8e2ee;--bg:#eef3fa;--panel:#fff;
+    --red:#d64545;--green:#17924d;--amber:#d98a00;
+    --fs:clamp(12px,.30vw + 10.6px,14.5px);
+    --fs-s:clamp(11.5px,.26vw + 10px,13px);
+    --fs-t:clamp(14.5px,.5vw + 11.8px,19px);
+    --gap:10px;--rad:12px;--wh:560px;
+  }
+  .widget{position:relative;width:100vw;height:var(--wh);max-height:900px;display:flex;flex-direction:column;background:var(--bg);overflow:hidden;border-top:3px solid var(--teal)}
+
+  .hdr{flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:8px 14px;background:linear-gradient(118deg,var(--navy-deep),var(--navy) 55%,#17588f);color:#fff}
+  .hdr-badge{flex:0 0 auto;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);padding:4px 9px;border-radius:8px;font-size:var(--fs-s);font-weight:700}
+  .hdr-titles{flex:1 1 auto;min-width:0}
+  .hdr h1{font-size:var(--fs-t);font-weight:750;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hdr-sub{font-size:var(--fs-s);opacity:.88;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hdr-right{flex:0 0 auto;display:flex;align-items:center;gap:10px}
+  .dots{display:flex;gap:6px}
+  .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.32);cursor:pointer;transition:.2s}
+  .dot.on{background:#7fe9d4;transform:scale(1.15)}
+  .score-chip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:3px 10px 3px 5px}
+  .ring{width:38px;height:38px;transform:rotate(-90deg)}
+  .ring-bg{fill:none;stroke:rgba(255,255,255,.28);stroke-width:3.6}
+  .ring-fg{fill:none;stroke:#7fe9d4;stroke-width:3.6;stroke-linecap:round;stroke-dasharray:97.4;stroke-dashoffset:97.4;transition:stroke-dashoffset .45s}
+  .score-val{font-size:var(--fs-s);font-weight:800;line-height:1.1}
+  .score-val small{display:block;font-weight:500;opacity:.8;font-size:10.5px}
+
+  .main{position:relative;flex:1 1 auto;min-height:0;padding:12px 14px}
+  .step{position:absolute;inset:12px 14px;display:none;flex-direction:column;gap:9px;min-height:0}
+  .step.active{display:flex}
+  .cols{display:flex;gap:var(--gap);flex:1 1 auto;min-height:0}
+  .col{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;min-height:0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--rad);padding:9px 11px;overflow:hidden}
+  .card-title{font-size:var(--fs-s);font-weight:750;color:#2b527d;letter-spacing:.2px;display:flex;align-items:center;gap:6px;margin-bottom:5px}
+  .card-title .tag{margin-left:auto;font-size:10.5px;font-weight:600;color:var(--muted);background:#eef4fb;border-radius:6px;padding:2px 7px}
+  .muted{color:var(--muted)}
+  .foot-note{font-size:11px;color:var(--muted);line-height:1.35}
+  .note{background:#eef4fb;border:1px dashed #a9c6e8;border-radius:10px;padding:7px 10px;font-size:var(--fs-s);line-height:1.45;color:#26507c}
+  .brief-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 14px;font-size:var(--fs-s);line-height:1.4}
+  .brief-grid .k{color:var(--muted)}
+  .brief-grid .v{font-weight:650;color:var(--ink)}
+  .nowrap{white-space:nowrap}
+
+  table{width:100%;border-collapse:collapse;font-size:var(--fs-s);font-variant-numeric:tabular-nums}
+  th,td{padding:3.5px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+  th:first-child,td:first-child{text-align:left;white-space:normal}
+  thead th{background:#eef4fb;color:#2b527d;font-weight:700}
+  tbody tr:last-child td{border-bottom:none}
+  tr.total td{font-weight:800;background:#f6faff;border-top:2px solid #c6d8ec}
+
+  .pline{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:6px 9px;font-size:var(--fs-s);line-height:1.4;cursor:pointer;background:#fff;transition:.12s;position:relative}
+  .pline:hover{border-color:#a9c6e8;background:#f7fbff}
+  .pline .tx{flex:1 1 auto;min-width:0}
+  .pline .mk{flex:0 0 auto;font-size:10.5px;font-weight:750;color:#8fa2b6}
+  .pline.sel{border-color:var(--amber);background:#fff8ec}
+  .pline.sel .mk{color:var(--amber)}
+  .pline.okf{border-color:#7cc898;background:#eaf7ef}
+  .pline.okf .mk{color:var(--green)}
+  .pline.missf{border-color:#e7a49e;background:#fdeceb}
+  .pline.missf .mk{color:var(--red)}
+  .pline.falsef{border-color:#f2d9a8;background:#fff4e2}
+  .pline.locked{cursor:default;background:#f4f7fb;border-style:dashed}
+  .pline.locked:hover{border-color:var(--line);background:#f4f7fb}
+  .pline .why{display:none;font-size:10.5px;color:#8c5a10;margin-top:0;line-height:1.22}
+  .pline.show-why .why{display:block}
+
+  .crit-list{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:2px}
+  .crit{display:flex;align-items:center;gap:7px;padding:3px 5px;border-radius:8px;font-size:var(--fs-s);line-height:1.25;min-height:22px}
+  .crit .ic{flex:0 0 auto;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:800;background:#eef1f5;color:#8fa2b6}
+  .crit.ok .ic{background:rgba(23,146,77,.16);color:var(--green)}
+  .crit.bad .ic{background:rgba(214,69,69,.13);color:var(--red)}
+  .crit .lb{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .crit .hintxt{display:none;color:var(--amber);font-size:11px;white-space:nowrap}
+  .crit.showhint .hintxt{display:block}
+
+  .ta-head{display:flex;align-items:center;gap:8px;font-size:var(--fs-s);font-weight:700;color:#2b527d}
+  .ta-count{margin-left:auto;font-weight:600;color:var(--muted);font-size:11px}
+  textarea{width:100%;flex:1 1 auto;min-height:60px;resize:none;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-family:inherit;font-size:var(--fs-s);line-height:1.45;color:var(--ink);background:#fff;outline:none;overflow:auto}
+  textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,161,132,.15)}
+  textarea::placeholder{color:#9db1c7}
+  .scan{display:flex;gap:7px;align-items:flex-start;border-radius:9px;padding:6px 9px;font-size:11px;line-height:1.35;border:1px solid}
+  .scan.clean{background:#e9f7ee;border-color:#b9e2c6;color:#1c6b3c}
+  .scan.danger{background:#fdeceb;border-color:#e7a49e;color:#8c2f27}
+
+  .quiz-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px;flex:1 1 auto;min-height:0}
+  .s2-docs{display:grid;grid-template-columns:1fr 1.15fr;gap:8px;flex:0 0 auto;min-height:0}
+  .s2-docs .card{overflow:hidden}
+  .instr{flex:0 0 auto;background:#eef5fd;border:1px solid #d3e2f5;border-radius:10px;padding:5px 9px;font-size:var(--fs-s);color:#25507e;line-height:1.32}
+  .i-short{display:none}
+  .hide-xnarrow{display:revert}
+  .etalon-compact{display:none}
+  .widget.compact .etalon-table{display:none}
+  .widget.compact .etalon-compact{display:block}
+  .widget.compact .s2-docs .card{padding:8px 11px}
+  .widget.compact .card-title{margin-bottom:3px}
+  .widget.compact .s2-docs .card-title{display:none}
+  .widget.compact .instr{padding:3px 7px;line-height:1.22}
+  .widget.compact .s2-docs .pline{line-height:1.2!important;padding:3px 6px!important}
+  .widget.compact .paper .pline{line-height:1.25!important;padding:2px 6px!important}
+  .paper .pline + .pline{margin-top:3px}
+  .paper h3{font-size:13px}
+  .widget.compact .step{inset:8px 11px;gap:7px}
+  .widget.compact .ftr{padding:6px 11px 10px}
+  .widget.compact .quiz{padding:5px 7px;gap:3px}
+  .widget.compact .q-text{line-height:1.25}
+  .widget.compact .opt{line-height:1.3}
+  .etalon-compact .pline{margin-top:0}
+  .etalon-compact .pline + .pline{margin-top:5px}
+  .quiz{background:#fff;border:1px solid var(--line);border-radius:12px;padding:7px 10px;display:flex;flex-direction:column;gap:5px;min-height:0;overflow:hidden}
+  .q-text{font-size:var(--fs-s);font-weight:700;line-height:1.3}
+  .q-opts{display:flex;flex-direction:column;gap:4px}
+  .opt{border:1px solid var(--line);background:#f7fafd;border-radius:9px;padding:5px 9px;font-size:var(--fs-s);cursor:pointer;font-family:inherit;color:var(--ink);transition:.12s;text-align:left;line-height:1.3}
+  .opt:hover{border-color:#a9c6e8}
+  .opt.right{background:#e9f7ee;border-color:#7cc898;color:#1c6b3c;font-weight:700}
+  .opt.wrong{background:#fdeceb;border-color:#e7a49e;color:#8c2f27}
+  .opt.locked{cursor:default}
+
+  .banner{border-radius:10px;padding:7px 10px;font-size:var(--fs-s);line-height:1.4;display:flex;gap:8px;align-items:flex-start}
+  .banner.warn{background:#fff4e2;border:1px solid #f2d9a8;color:#7a5410}
+  .banner.good{background:#e9f7ee;border:1px solid #b9e2c6;color:#1c6b3c}
+  .btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 13px;font-size:var(--fs-s);font-weight:700;color:#1b4570;cursor:pointer;font-family:inherit;transition:.15s}
+  .btn:hover{border-color:#a9c6e8;background:#f4f9ff}
+  .btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+  .btn.primary:hover{background:var(--teal-dk);border-color:var(--teal-dk)}
+  .btn.ghost{background:transparent}
+  .btn:disabled{opacity:.45;cursor:default}
+  .row-btns{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+
+  .paper{background:#fffdf6;border:1px solid #e8dfc9;border-radius:11px;padding:7px 12px;font-size:var(--fs-s);line-height:1.45;flex:1 1 auto;min-height:0;overflow:hidden;box-shadow:0 8px 22px rgba(20,40,63,.08)}
+  .paper h3{text-align:center;font-size:var(--fs);letter-spacing:.4px;font-weight:800}
+  .paper .p-sub{text-align:center;font-size:10px;line-height:1.2;color:#6b5b33;margin:1px 0 4px}
+  .paper .p-center{text-align:center}
+
+  .overlay{position:absolute;inset:0;background:#fff;border:1px solid var(--line);border-radius:var(--rad);padding:10px 12px;display:none;flex-direction:column;gap:8px;z-index:6;box-shadow:0 18px 40px rgba(18,62,107,.18)}
+  .overlay.show{display:flex}
+  .cheat-text{flex:1 1 auto;min-height:0;background:#f6f9fd;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:var(--fs-s);line-height:1.5;overflow:hidden}
+  .cheat-text b{color:#2b527d}
+
+  .ftr{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:8px 14px 14px;background:#fff;border-top:1px solid var(--line)}
+  .ftr-hint{font-size:var(--fs-s);color:var(--muted);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:0 1 auto;min-width:0}
+  .ftr .btn{flex:0 0 auto;white-space:nowrap}
+  .ftr-sp{flex:1 1 auto}
+
+  .resizer{position:absolute;left:0;right:0;bottom:0;height:12px;cursor:ns-resize;display:flex;align-items:center;justify-content:center;z-index:30;touch-action:none}
+  .s3tabs{display:none}
+  .resizer .grip{width:58px;height:4px;border-radius:4px;background:#c3d0de;transition:.15s}
+  .resizer:hover .grip{background:var(--teal);width:74px}
+  .resize-hint{position:absolute;right:12px;bottom:18px;background:#123e6b;color:#fff;font-size:11px;padding:5px 9px;border-radius:8px;opacity:.95;z-index:29;transition:opacity .5s;pointer-events:none}
+  .resize-hint.hide{opacity:0;pointer-events:none}
+
+  .widget.short{--gap:7px}
+  .widget.short .main{padding:8px 11px}
+  .widget.short .step{inset:8px 11px;gap:7px}
+  .widget.short .hdr{padding:6px 11px}
+  .widget.short .hdr-sub{display:none}
+  .widget.short .card{padding:7px 9px}
+  .widget.short .ftr{padding:4px 11px 9px}
+  .widget.short textarea{min-height:48px}
+  .widget.short .pline{padding:2px 5px}
+  .widget.short .paper{padding:4px 6px}
+  .widget.short .paper .pline{padding:1px 5px!important;line-height:1.2!important}
+  .widget.short th,.widget.short td{padding:2.5px 7px}
+
+  @media (min-width:900px){
+    .quiz-grid{grid-template-columns:repeat(4,1fr);grid-template-rows:1fr}
+  }
+  @media (max-width:720px) and (max-height:700px){
+    .hdr-sub{display:none}
+  }
+  @media (max-width:720px){
+    .cols{flex-direction:column}
+    .col{flex:0 1 auto!important;min-height:0}
+    .col:last-child{flex:1 1 auto!important}
+    .main{padding:9px 11px}
+    .step{inset:9px 11px;gap:7px}
+    .hide-narrow{display:none!important}
+    .s2-docs table th:nth-child(2),.s2-docs table td:nth-child(2){display:none}
+    .brief-grid{grid-template-columns:1fr;gap:2px 0}
+    textarea{min-height:70px}
+    .crit-list.compact2{display:grid;grid-template-columns:1fr 1fr;align-content:start;gap:1px 8px}
+    .crit-list.compact2 .crit{min-height:0;padding:2px 4px}
+    .crit-list.compact2 .lb{white-space:normal;overflow:visible;text-overflow:clip}
+    .crit-list.compact2 .hintxt{white-space:normal}
+    .hdr h1{font-size:var(--fs)}
+    .hdr-badge{display:none}
+    .paper{padding:7px 9px}
+    .paper h3{margin-top:4px}
+    .paper .p-sub{margin:0 0 4px}
+    .pline{padding:4px 7px;line-height:1.35}
+    .quiz{padding:6px 8px}
+    .btn{padding:6px 10px}
+    .s3tabs{display:flex}
+    .pline .why{display:none!important}
+    .step[data-step="3"] .col{flex:1 1 auto!important}
+    .step[data-step="3"][data-tab="doc"] .col-res{display:none}
+    .step[data-step="3"][data-tab="res"] .col-doc{display:none}
+    .step[data-step="3"][data-tab="res"] .col-res{display:flex}
+    .step[data-step="3"][data-tab="doc"] .col-doc{display:flex}
+  }
+  @media (max-width:480px){
+    .step[data-step="1"] .card:first-child{display:none}
+    textarea{min-height:48px}
+    .crit-list.compact2{grid-template-columns:1fr;gap:0}
+    .crit-list.compact2 .lb{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .quiz-grid{gap:3px}
+    .quiz{padding:3px 5px;gap:2px}
+    .q-text{line-height:1.2}
+    .opt{padding:4px 7px;line-height:1.2}
+    .btn{padding:5px 8px}
+    .paper .p-sub{display:none}
+    .card-title .tag{display:none}
+    .s2-docs{grid-template-columns:1fr 1fr;gap:3px}
+    .etalon-table{display:none}
+    .etalon-compact{display:block}
+    .s2-docs .card-title{display:none}
+    .hide-xnarrow{display:none!important}
+    .i-full{display:none}
+    .i-short{display:inline}
+    .instr{padding:1px 4px;font-size:11px;line-height:1.15}
+    .paper h3{font-size:12px}
+    .q-text{line-height:1.15}
+    .widget.compact .s2-docs .pline{padding:1px 4px!important;line-height:1.12!important}
+    .widget.compact .quiz{padding:3px 5px;gap:1px}
+    .widget.compact .opt{padding:2px 5px;line-height:1.18}
+    .widget.compact .q-text{line-height:1.15}
+    .widget.compact .s2-docs .card{padding:4px 7px!important}
+    .quiz-grid{gap:1px}
+    .hdr h1{font-size:14px}
+    .widget.short .ftr{padding:3px 11px 7px}
+    .pline .muted{display:none}
+    .widget .paper{padding:4px 6px!important}
+    .widget .pline{padding:2px 5px!important;line-height:1.2!important}
+  }
+  @media (max-width:430px){
+    .score-chip small{display:none}
+    .ring{width:32px;height:32px}
+    .ftr-hint{display:none}
+    .btn{padding:7px 10px}
+  }
+</style>
+</head>
+<body>
+<div class="widget" id="widget">
+
+  <header class="hdr">
+    <div class="hdr-badge">Тренажер</div>
+    <div class="hdr-titles">
+      <h1>Заявление на возмещение расходов на охрану труда</h1>
+      <p class="hdr-sub">Составляем промпт, проверяем цифры и ищем ошибки в сгенерированном заявлении · приказы Минтруда № 347н и СФР № 278</p>
+    </div>
+    <div class="hdr-right">
+      <div class="dots" id="dots">
+        <div class="dot on" data-go="1" title="Шаг 1. Составляем промпт"></div>
+        <div class="dot" data-go="2" title="Шаг 2. Проверяем цифры"></div>
+        <div class="dot" data-go="3" title="Шаг 3. Ищем ошибки"></div>
+      </div>
+      <div class="score-chip">
+        <svg class="ring" viewBox="0 0 36 36" aria-hidden="true">
+          <circle class="ring-bg" cx="18" cy="18" r="15.5"></circle>
+          <circle class="ring-fg" id="ringFg" cx="18" cy="18" r="15.5"></circle>
+        </svg>
+        <div class="score-val"><span id="scoreVal">0</span>%<small>итог</small></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- STEP 1 -->
+    <section class="step active" data-step="1">
+      <div class="cols">
+        <div class="col">
+          <div class="card" style="flex:0 0 auto">
+            <div class="card-title">📌 Кейс (данные условные) <span class="tag">форма 9–12 приложения № 2 к приказу СФР № 278</span></div>
+            <div class="brief-grid">
+              <div><span class="k">Задача:</span> <span class="v">заявление о возмещении расходов на предупредительные меры (СОУТ, обучение, медосмотры, СКЛ, медизделия)</span></div>
+              <div><span class="k">Итого расходов:</span> <span class="v nowrap">888 500 ₽</span> <span class="k">(согласовано СФР — 900 000 ₽)</span></div>
+              <div class="hide-narrow"><span class="k">Основание:</span> <span class="v">решение о финансовом обеспечении предупредительных мер от [дата] № [номер]</span></div>
+              <div class="hide-narrow"><span class="k">Приложения:</span> <span class="v">отчет о произведенных расходах, копия ЛНА, подтверждающие и платежные документы</span></div>
+            </div>
+          </div>
+          <div class="card" style="flex:1 1 auto;display:flex;flex-direction:column;min-height:0">
+            <div class="ta-head">✍️ Ваш промпт для нейросети
+              <span class="ta-count"><span id="taCount">0</span> / 1000</span>
+            </div>
+            <textarea id="ta" maxlength="1000" placeholder="Пишите сами. Реквизиты — плейсхолдерами: [наименование], [ИНН], [регистрационный номер], [сумма]… Укажите форму заявления, основание, разбивку по мероприятиям и перечень приложений."></textarea>
+            <div class="scan clean" id="scan"><span>🛡</span><span id="scanText">Конфиденциальные данные не обнаружены.</span></div>
+            <div class="row-btns" style="margin-top:7px">
+              <button class="btn ghost" id="btnHint">💡 Подсказка (<span id="hintsLeft">3</span>)</button>
+              <button class="btn ghost" id="btnCheat">📖 Шпаргалка</button>
+              <button class="btn ghost" id="btnClear">Очистить</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card" style="flex:1 1 auto;display:flex;flex-direction:column;min-height:0">
+            <div class="card-title">🧩 Чек-лист промпта <span class="tag"><span id="critOk">0</span>/10 блоков</span></div>
+            <div class="crit-list compact2" id="critList"></div>
+            <div class="foot-note hide-narrow">Критерии ловят смысловые маркеры — формулируйте своими словами. Подсказки ограничены и снижают итог.</div>
+          </div>
+        </div>
+      </div>
+      <div class="overlay" id="cheatOverlay">
+        <div class="card-title">📖 Шпаргалка: структура промпта для заявления по форме 278 <button class="btn ghost" id="btnCloseCheat" style="margin-left:auto;padding:4px 9px">Закрыть ✕</button></div>
+        <div class="cheat-text">
+<b>1. Роль.</b> «Ты — специалист по охране труда и отчетности перед СФР.»<br>
+<b>2. Документ.</b> «Составь заявление о возмещении фактически произведенных расходов на предупредительные меры по форме из приложения № 2 к приказу СФР от 11.03.2025 № 278 (к вариантам 9–12).»<br>
+<b>3. Страхователь.</b> «Страхователь: [наименование], [ИНН], [КПП], [регистрационный номер в СФР]; территориальный орган: [наименование].»<br>
+<b>4. Основание и период.</b> «Основание: решение о финансовом обеспечении предупредительных мер от [дата] № [номер]; расходы за 2026 год.»<br>
+<b>5. Сумма и разбивка.</b> «Сумма: [сумма] (прописью), с расшифровкой по видам мероприятий: СОУТ, обучение, медосмотры, СКЛ, медизделия.»<br>
+<b>6. Банковские реквизиты.</b> «Перечислить на [р/с], [банк], [БИК]; способ получения решения: [способ].»<br>
+<b>7. Приложения.</b> «Отчет о произведенных расходах, копия ЛНА/коллективного договора, документы о приобретении и выполнении, платежные документы.»<br>
+<b>8. Оформление.</b> «Подписи руководителя и исполнителя, дата, печать (при наличии).»<br>
+<b>9. Запрет на выдумки.</b> «Недостающее не додумывай — ставь маркер [уточнить].»<br>
+<b>10. Конфиденциальность.</b> Данные — плейсхолдерами и обезличенно: без ФИО, счетов и сведений о здоровье.
+        </div>
+        <div class="foot-note">Шпаргалка не вставляет текст — формулировать вы будете сами.</div>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step" data-step="2">
+      <div class="instr"><span class="i-full"><b>Как проверять:</b> 🤖 слева — как сгенерировано, 📊 справа — эталон. Сверьте: 1) пропись и цифры; 2) строки разбивки; 3) итог строк; 4) лимит.</span><span class="i-short">Сверьте: пропись и цифры · строки · итог · лимит.</span></div>
+      <div class="s2-docs">
+        <div class="card">
+          <div class="card-title">🤖 Заявление нейросети <span class="tag">как сгенерировано</span></div>
+          <div class="pline locked"><span class="tx">Сумма: <b>888 500 (восемьсот восемьдесят восемь тысяч)</b> руб.<br>
+          <b>Разбивка:</b> СОУТ 240 000 · обучение 96 000 · медосмотры <b>262 000</b> · СКЛ 252 000 · медизделия 38 000.<br>
+          <span class="muted hide-narrow">— цифры нейросети, сверяем с отчетом.</span></span></div>
+        </div>
+        <div class="card">
+          <div class="card-title">📊 Отчет-эталон <span class="tag">для сверки</span></div>
+          <div class="etalon-table">
+            <table>
+              <thead><tr><th>Мероприятие</th><th>Объем</th><th>По отчету, ₽</th></tr></thead>
+              <tbody>
+                <tr><td>СОУТ</td><td>40 раб. мест</td><td>240 000</td></tr>
+                <tr><td>Обучение по охране труда</td><td>12 чел.</td><td>96 000</td></tr>
+                <tr><td>Периодические медосмотры</td><td>25 чел.</td><td>262 500</td></tr>
+                <tr><td>СКЛ (вредные работы)</td><td>6 путевок</td><td>252 000</td></tr>
+                <tr><td>Медизделия для контроля алкоголя/ПАВ</td><td>2 шт.</td><td>38 000</td></tr>
+                <tr class="total"><td>ИТОГО</td><td>—</td><td>888 500</td></tr>
+              </tbody>
+            </table>
+            <div class="foot-note">Лимит 20%: (5 200 000 − 60 000) × 20% = <b>1 028 000</b> ₽ · Согласовано к возмещению: <b>900 000</b> ₽</div>
+          </div>
+          <div class="etalon-compact">
+            <div class="pline locked"><span class="tx">СОУТ 240 000 · обучение 96 000 · медосмотры <b>262 500</b> · СКЛ 252 000 · медизделия 38 000 · итого <b>888 500</b>.<br>
+            Лимит 20%: <b>1 028 000</b> · согласовано <b>900 000</b></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="quiz-grid">
+        <div class="quiz" data-q="0" data-p="8">
+          <div class="q-text">1. Сумма прописью равна сумме цифрам?</div>
+          <div class="q-opts">
+            <button class="opt" data-ok="0">Да</button>
+            <button class="opt" data-ok="1">Нет: прописью 888 000, цифрами 888 500</button>
+            <button class="opt" data-ok="0">Нет: должно быть 890 500</button>
+          </div>
+        </div>
+        <div class="quiz" data-q="1" data-p="8">
+          <div class="q-text">2. Разбивка совпала с отчетом?</div>
+          <div class="q-opts">
+            <button class="opt" data-ok="0">Да</button>
+            <button class="opt" data-ok="1">Нет: в заявлении 262 000, в отчете 262 500</button>
+            <button class="opt" data-ok="0">Нет: СОУТ 238 000 ≠ 240 000</button>
+          </div>
+        </div>
+        <div class="quiz" data-q="2" data-p="7">
+          <div class="q-text">3. Сумма строк разбивки равна итогу?</div>
+          <div class="q-opts">
+            <button class="opt" data-ok="0">Да, равна 888 500</button>
+            <button class="opt" data-ok="1">Нет: строки 888 000, итог 888 500</button>
+          </div>
+        </div>
+        <div class="quiz" data-q="3" data-p="7">
+          <div class="q-text">4. Итог (888 500) укладывается в лимит?</div>
+          <div class="q-opts">
+            <button class="opt" data-ok="1">Да: ≤ 900 000 и ≤ 1 028 000 (20%)</button>
+            <button class="opt" data-ok="0">Нет: превышен 20%</button>
+            <button class="opt" data-ok="0">Нет: сверх согласования</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="step" data-step="3" data-tab="doc">
+      <div class="row-btns s3tabs" id="s3tabs">
+        <button class="btn primary" data-tab="doc">📄 Документ</button>
+        <button class="btn ghost" data-tab="res">🏆 Результат</button>
+      </div>
+      <div class="cols">
+        <div class="col col-doc" style="flex:1.4 1 0">
+          <div class="paper">
+            <div class="p-center muted hide-xnarrow" style="font-size:11px">Приложение № 2 к приказу СФР от 11.03.2025 № 278 (форма 9–12) · данные условные</div>
+            <h3 style="margin-top:4px">ЗАЯВЛЕНИЕ О ВОЗМЕЩЕНИИ РАСХОДОВ НА ПРЕДУПРЕДИТЕЛЬНЫЕ МЕРЫ</h3>
+            <div class="p-sub">по сокращению производственного травматизма и профессиональных заболеваний работников и санаторно-курортное лечение работников, занятых на работах с вредными и (или) опасными производственными факторами</div>
+            <div class="pline" data-err="0"><span class="tx">Сведения о страхователе: наименование: [наименование] · рег. номер: [номер] · код подчиненности: [код].<span class="why"></span></span><span class="mk">⚑</span></div>
+            <div class="pline" data-err="1"><span class="tx">В соответствии со статьей 18 ФЗ от 24.07.1998 № 125-ФЗ прошу возместить произведенные в <b>2025</b> году расходы на предупредительные меры.<span class="why">Расходы — за 2026 год.</span></span><span class="mk">⚑</span></div>
+            <div class="pline locked"><span class="tx">в сумме: 888 500 руб. 00 коп. в пределах разрешенной суммы согласно приказу. <span class="muted hide-xnarrow">(цифры проверены на шаге 2)</span></span></div>
+            <div class="pline" data-err="0"><span class="tx">Приказ территориального органа СФР: от [дата] № [номер] · банк: [банк] · счет N: [р/с] · БИК: [БИК].<span class="why"></span></span><span class="mk">⚑</span></div>
+            <div class="pline hide-narrow" data-err="0"><span class="tx">Лицевой счет (для получателей бюджетных средств): [лицевой счет] · код бюджетной классификации: [КБК] · ОКТМО: [ОКТМО].<span class="why"></span></span><span class="mk">⚑</span></div>
+            <div class="pline" data-err="1"><span class="tx"><b>К заявлению прилагаю документы, подтверждающие фактически произведенные расходы:</b> 1) отчет о произведенных расходах; 2) копия ЛНА об охране труда.<span class="why">По п. 10–11 № 347н — подтверждающие и платежные документы.</span></span><span class="mk">⚑</span></div>
+            <div class="pline hide-narrow" data-err="0"><span class="tx">Решение прошу направить: на личном приеме — нет; по почте — да; через ЕПГУ — нет.<span class="why"></span></span><span class="mk">⚑</span></div>
+            <div class="pline" data-err="0"><span class="tx">Руководитель: подпись: ______ · ФИО: [ФИО] · гл. бухгалтер (при наличии): подпись: ______ · ФИО: [ФИО].<span class="why"></span></span><span class="mk">⚑</span></div>
+            <div class="pline hide-narrow" data-err="0"><span class="tx">Уполномоченный представитель (при наличии): подпись: ______ · [доверенность].<span class="why"></span></span><span class="mk">⚑</span></div>
+            <div class="pline" data-err="1"><span class="tx">Дата подписания: <b>30.02.2026</b> г.<span class="why">Такой даты нет: в феврале 2026 — 28 дней.</span></span><span class="mk">⚑</span></div>
+            <div class="pline" data-err="0"><span class="tx">Место печати (при наличии): ______ · телефон: [телефон].<span class="why"></span></span><span class="mk">⚑</span></div>
+          </div>
+        </div>
+        <div class="col col-res">
+          <div class="banner" id="resBanner">🔎 <span>В документе <b>3 строки с ошибками</b>. Отметьте их флажками. Строка с суммой заблокирована — цифры вы уже проверили.</span></div>
+          <div class="card" style="flex:1 1 auto;display:flex;flex-direction:column;min-height:0">
+            <div class="card-title">🏆 Итог тренажера <span class="tag" id="levelTag">—</span></div>
+            <div class="crit-list" id="finalList"></div>
+            <div class="foot-note" style="margin-top:auto">Правило: нейросеть ускоряет работу, но ответственность за цифры, даты и комплект документов остается за человеком.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="ftr">
+    <div class="ftr-hint" id="ftrHint">Шаг 1 из 3 · Составляем промпт</div>
+    <div class="ftr-sp"></div>
+    <button class="btn ghost" id="btnPrev">← Назад</button>
+    <button class="btn primary" id="btnNext">Далее →</button>
+  </footer>
+
+  <div class="resize-hint" id="resizeHint">↕ Потяните нижнюю кромку — виджет изменит высоту</div>
+  <div class="resizer" id="resizer" title="Потяните, чтобы изменить высоту виджета (460–600 px). Двойной клик — мин/макс"><div class="grip"></div></div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- resizer & scaling ---------- */
+  var widget = document.getElementById('widget');
+  var resizer = document.getElementById('resizer');
+  var resizeHint = document.getElementById('resizeHint');
+  function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+  function setH(v){
+    var maxH = Math.min(900, window.innerHeight || 900);
+    var minH = Math.min(460, maxH);
+    v = clamp(Math.round(v), minH, maxH);
+    widget.style.setProperty('--wh', v + 'px');
+    widget.classList.toggle('short', v < 520);
+    widget.classList.toggle('compact', v < 700);
+    if (window.parent && window.parent !== window) {
+      try { window.parent.postMessage({ type: 'sfr-widget-height', height: v }, '*'); } catch(e) {}
+    }
+  }
+  setH(Math.min(900, window.innerHeight || 900));
+  var dragging = false, startY = 0, startH = 0;
+  resizer.addEventListener('pointerdown', function(e){
+    dragging = true; startY = e.clientY; startH = widget.getBoundingClientRect().height;
+    try { resizer.setPointerCapture(e.pointerId); } catch(err) {}
+    e.preventDefault();
+  });
+  window.addEventListener('pointermove', function(e){ if (dragging) { setH(startH + (e.clientY - startY)); e.preventDefault(); } });
+  window.addEventListener('pointerup', function(){ dragging = false; });
+  window.addEventListener('pointercancel', function(){ dragging = false; });
+  resizer.addEventListener('dblclick', function(){ setH(widget.getBoundingClientRect().height > 540 ? 470 : Math.min(900, window.innerHeight || 900)); });
+  window.addEventListener('resize', function(){ setH(widget.getBoundingClientRect().height); });
+  setTimeout(function(){ resizeHint.classList.add('hide'); }, 4500);
+
+  /* ---------- steps ---------- */
+  var stepNames = ['Шаг 1 из 3 · Составляем промпт','Шаг 2 из 3 · Сверяем цифры с отчетом','Шаг 3 из 3 · Ищем ошибки в форме'];
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
+  var dots = Array.prototype.slice.call(document.querySelectorAll('.dot'));
+  var ftrHint = document.getElementById('ftrHint');
+  var btnPrev = document.getElementById('btnPrev');
+  var btnNext = document.getElementById('btnNext');
+  var cur = 1, maxVisited = 1;
+  var checked3 = false;
+
+  function showStep(n){
+    cur = n;
+    if (n > maxVisited) maxVisited = n;
+    steps.forEach(function(s){ s.classList.toggle('active', +s.dataset.step === n); });
+    dots.forEach(function(d){ d.classList.toggle('on', +d.dataset.go <= maxVisited); });
+    ftrHint.textContent = stepNames[n - 1];
+    btnPrev.disabled = (n === 1);
+    refreshNextBtn();
+  }
+  function refreshNextBtn(){
+    if (cur === 1) btnNext.textContent = 'Сгенерировать заявление →';
+    else if (cur === 2) btnNext.textContent = 'К поиску ошибок →';
+    else btnNext.textContent = checked3 ? 'Пройти заново ↻' : 'Проверить документ →';
+  }
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){
+      var t = +d.dataset.go;
+      if (t <= maxVisited) showStep(t);
+    });
+  });
+  btnPrev.addEventListener('click', function(){ if (cur > 1) showStep(cur - 1); });
+
+  /* ---------- privacy scanner ---------- */
+  function scanPrivacy(text){
+    var f = [];
+    // 1) Числовые идентификаторы (ИНН, счета, телефоны). Денежные суммы в формате «888 500»
+    //    вырезаются перед проверкой, чтобы перечень сумм не давал ложного срабатывания.
+    var t2 = text.replace(/\d{1,3}(?:[ \u00a0\u202f]\d{3})+(?:[.,]\d{2})?/g, ' ');
+    if (/\d(?:[\s().+-]?\d){9,}/.test(t2)) f.push('числовые идентификаторы (ИНН, счета, телефоны)');
+    if (/[А-ЯЁ][а-яё]{2,}\s+[А-ЯЁ]\.\s*[А-ЯЁ]\./.test(text)) f.push('ФИО');
+    if (/[@]|эл(ектронн)?[а-яё\w]*\s+(почт|адрес)/i.test(text)) f.push('контакты (e-mail)');
+    // 2) Слова-маркеры реальных данных. Упоминание названий полей («ФИО руководителя»,
+    //    «[дата рождения]») — это НЕ данные: такие контексты пропускаем.
+    var piiRe = /(паспорт|снилс|огрн|фио|фамилия|дата\s+рождени|номер\s+(карты|телефона|больничного)|зарплатн[а-яё\w]*\s+карт|свидетельств[а-яё\w]*\s+о\s+рождени|сведени[а-яё\w]*\s+о\s+здоровь)/gi;
+    var negRe = /(без|кроме|исключ|убер|удал|не\s+указ|не\s+включ|не\s+переда|обезлич|скрой|замени|убрать)/i;
+    var benignRe = /(пол[еяю]|строк[аиу]|реквизит|подпис|бланк|форм[аеыу]|укажит|заполнит|впишит|поставь|заменит|маркер|граф[аеуяи]|таблиц[аеуя]|категори|имен[ауе]|полей)/i;
+    var m, hit = false;
+    while ((m = piiRe.exec(text)) !== null) {
+      var before = text.slice(Math.max(0, m.index - 60), m.index);
+      var after = text.slice(m.index + m[0].length, m.index + m[0].length + 30);
+      var nearBrackets = before.indexOf('[') !== -1 || after.indexOf(']') !== -1;
+      if (nearBrackets) continue;
+      if (negRe.test(before) || negRe.test(after)) continue;
+      if (benignRe.test(before)) continue;
+      hit = true; break;
+    }
+    if (hit) f.push('персональные / платежные данные');
+    return f;
+  }
+
+  /* ---------- step 1: prompt ---------- */
+  function N(s){ return (s || '').toLowerCase().replace(/ё/g, 'е'); }
+
+  var CRIT = [
+    { label: '1. Роль ИИ', hint: '«Ты — специалист…», «Действуй как…», «В роли…»',
+      test: function(t){ t = N(t);
+        return /(ты|вы)\s*[-—–:]?\s*\S{0,18}?\s*(специалист|эксперт|инженер|консультант|бухгалтер|кадров|юрист|ассистент|помощник|автор|мастер|профи)/i.test(t)
+          || /(в роли|роль|действуй(те)? как|работа(й|те) как|представь(те)? (себе|себя|что)|выступа(й|те) как|занима(й|те) должност|являешься|являетесь)/i.test(t)
+          || /(специалист|эксперт|инженер|консультант|бухгалтер|кадровик|юрист|помощник)[^.]{0,6}по охран/i.test(t); } },
+    { label: '2. Тип документа', hint: 'заявление о возмещении расходов на предупредительные меры',
+      test: function(t){ t = N(t);
+        return /(заявлени|заявк|ходатайств|обращени)/i.test(t)
+          && /(возмещени|возместит|компенсац|компенсироват|покрыт|возврат)/i.test(t)
+          && /(предупредительн|охран[а-яё\w]*\s*труда|травматизм|соцстрах|сфр|фсс|социальн[а-яё\w]*\s*страхован|затрат|расход)/i.test(t); } },
+    { label: '3. Плейсхолдеры', hint: 'минимум 2 любых: [наименование], [ИНН], [дата], [р/с]…',
+      test: function(t){ t = N(t);
+        var ms = t.match(/[\[<{][^\]}>]{1,30}[\]>}]/g) || [];
+        var re = /(наименован|организац|инн|кпп|регистрац|страховател|территориальн|фамили|фио|руководител|подписант|директор|исполнител|должност|адрес|телефон|почт|сч[её]т|р\s*\/\s*с|бик|банк|отделени|город|дат|сумм|номер|основани|решени|подразделени|получател|окато|огрн|окпо|уточнить|срок|место)/i;
+        var good = 0;
+        ms.forEach(function(x){ if (re.test(x)) good++; });
+        return good >= 2; } },
+    { label: '4. Основание и период', hint: 'решение о финансовом обеспечении + год',
+      test: function(t){ t = N(t);
+        return /(решени|основани|разрешени|уведомлени)/i.test(t)
+          && /(финансов[а-яё\w]*\s+обеспечени|финансован|финансиров|выделен|выдач|предоставлен|перечислен|средств|субвенц|субсид|территориальн|отделени|сфр|фсс)/i.test(t)
+          && /(20\d\d|за\s+год|период|отч[её]тн|текущ|прошл|истекш|январ|феврал|март|апрел|ма[йя]|июн|июл|август|сентябр|октябр|ноябр|декабр|квартал|месяц|расход[а-яё\w]*\s+за)/i.test(t); } },
+    { label: '5. Сумма и разбивка', hint: '[сумма] прописью и по видам мероприятий',
+      test: function(t){ t = N(t);
+        return /(сумм|итог|всего)/i.test(t)
+          && /(прописью|словами|цифрами|числами|\[сумма|дублир|888)/i.test(t)
+          && /(с[оо]ут|специальн[а-яё\w]*\s+оценк|оценк[а-яё\w]*\s+условий|обучени|обучен|медосмотр|санаторн|пут[её]вк|скл|оздоровлен|издели|алкогол|пав|расход|затрат|статьям|позици|видам|мероприяти|разбивк|детализац|перечн)/i.test(t); } },
+    { label: '6. Банковские реквизиты', hint: '[р/с], [банк], [БИК]',
+      test: function(t){ t = N(t);
+        return /(банковск|реквизит|сч[её]т|р\s*\/\s*с|бик|банк|корреспондентск|расч[её]тн|получател)/i.test(t); } },
+    { label: '7. Приложения', hint: 'отчет, ЛНА, платежные документы',
+      test: function(t){ t = N(t);
+        return /(прилож|прилага|комплект|сопроводительн|направля(й|те)|включ(и|ите)|перечн)/i.test(t)
+          && /(отч[её]т|плат[её]жн|подтвержда|копи|лна|локальн|коллективн|договор|соглашени|акт|справк|ведомост|смет|чек|накладн|приказ|положени|списк|табел|реестр|документ)/i.test(t); } },
+    { label: '8. Оформление (278)', hint: 'приложение № 2 к приказу СФР № 278, подписи, дата',
+      test: function(t){ t = N(t);
+        return /(278|приказ[а-яё\w]*\s+сфр|11\.03\.2025|приложени[а-яё\w]*\s*№?\s*2|приложени[а-яё\w]*\s+втор|форм[а-яё\w]*\s+(к|по|установленн|рекомендуем|сфр)|форме\s+приложени|админрегламент|регламент|вариант)/i.test(t)
+          && /(подпис|дат|печать|бланк|реквизит|оформлени|заполнени|шапк|титул|образ)/i.test(t); } },
+    { label: '9. Запрет додумывать', hint: '«[уточнить]» вместо выдумок',
+      test: function(t){ t = N(t);
+        return /(не\s+(додум|выдум|придум|вымышл|сочини|добавляй|вставля|подставля|дополня|фантазир|дорисов|включай лишш?н)|без\s+(дополнени|выдумок|фантази|доработок|самостоятельн|изменени|добавлени)|маркер|уточнить|пропусти|пропуск|прочерк|оставь (пуст|пропуск)|пуст(ым|ое|ую)|выдуман)/i.test(t); } },
+    { label: '10. Конфиденциальность', hint: 'фильтр не находит данные; названия полей — в [скобки]',
+      test: function(t){ return t.trim().length > 30 && scanPrivacy(t).length === 0; } }
+  ];
+
+  var ta = document.getElementById('ta');
+  var taCount = document.getElementById('taCount');
+  var critList = document.getElementById('critList');
+  var critOk = document.getElementById('critOk');
+  var scan = document.getElementById('scan');
+  var scanText = document.getElementById('scanText');
+  var scoreVal = document.getElementById('scoreVal');
+  var ringFg = document.getElementById('ringFg');
+  var hintsLeft = 3;
+  var MIN_PROMPT = 6;
+  var quizEarned = 0, quizAnswered = 0, errFound = 0, errFalse = 0;
+
+  CRIT.forEach(function(c){
+    var row = document.createElement('div');
+    row.className = 'crit bad';
+    row.innerHTML = '<span class="ic">?</span><span class="lb">' + c.label + '</span><span class="hintxt">' + c.hint + '</span>';
+    critList.appendChild(row);
+    c.el = row;
+  });
+
+  function promptOk(){ return CRIT.filter(function(c){ return c.test(ta.value); }).length; }
+  function promptPts(){ return Math.round(promptOk() / CRIT.length * 40); }
+
+  function updateScore(){
+    var errPts = checked3 ? Math.max(0, errFound * 10 - errFalse * 5) : 0;
+    var total = clamp(promptPts() + quizEarned + errPts, 0, 100);
+    scoreVal.textContent = total;
+    ringFg.style.strokeDashoffset = (97.4 * (1 - total / 100)).toFixed(1);
+  }
+
+  function update(){
+    taCount.textContent = ta.value.length;
+    var ok = 0;
+    CRIT.forEach(function(c){
+      var good = c.test(ta.value);
+      if (good) ok++;
+      c.el.classList.toggle('ok', good);
+      c.el.classList.toggle('bad', !good);
+      c.el.classList.remove('showhint');
+      c.el.querySelector('.ic').textContent = good ? '✓' : '?';
+    });
+    critOk.textContent = ok;
+    var f = scanPrivacy(ta.value);
+    if (f.length === 0) {
+      scan.className = 'scan clean';
+      scanText.textContent = '🛡 Конфиденциальные данные не обнаружены.';
+    } else {
+      scan.className = 'scan danger';
+      scanText.textContent = '⚠ Фильтр нашел подозрительное: ' + f.join(' + ') + '. Проверьте: возможно, это название поля или суммы — названия полей берите в [скобки] (например, [ФИО]). Настоящие данные в запрос не передаются.';
+    }
+    updateScore();
+    return ok;
+  }
+
+  ta.addEventListener('input', update);
+  document.getElementById('btnClear').addEventListener('click', function(){ ta.value = ''; update(); ta.focus(); });
+
+  document.getElementById('btnHint').addEventListener('click', function(){
+    if (hintsLeft <= 0) return;
+    var missing = -1;
+    for (var i = 0; i < CRIT.length; i++) { if (!CRIT[i].test(ta.value)) { missing = i; break; } }
+    if (missing === -1) return;
+    hintsLeft--;
+    document.getElementById('hintsLeft').textContent = hintsLeft;
+    CRIT[missing].el.classList.add('showhint');
+    CRIT[missing].el.style.background = '#fff8ec';
+    setTimeout(function(){ CRIT[missing].el.style.background = ''; }, 1600);
+    updateScore();
+  });
+
+  var cheatOverlay = document.getElementById('cheatOverlay');
+  document.getElementById('btnCheat').addEventListener('click', function(){ cheatOverlay.classList.add('show'); });
+  document.getElementById('btnCloseCheat').addEventListener('click', function(){ cheatOverlay.classList.remove('show'); });
+
+  /* ---------- step 2: number check quiz ---------- */
+  Array.prototype.slice.call(document.querySelectorAll('.quiz')).forEach(function(qz){
+    var opts = Array.prototype.slice.call(qz.querySelectorAll('.opt'));
+    opts.forEach(function(opt){
+      opt.addEventListener('click', function(){
+        if (qz.dataset.done === '1') return;
+        qz.dataset.done = '1';
+        quizAnswered++;
+        var ok = opt.dataset.ok === '1';
+        if (ok) { opt.classList.add('right'); quizEarned += parseInt(qz.dataset.p, 10) || 7; }
+        else {
+          opt.classList.add('wrong');
+          var good = qz.querySelector('.opt[data-ok="1"]');
+          if (good) good.classList.add('right');
+        }
+        opts.forEach(function(o){ o.classList.add('locked'); });
+        updateScore();
+      });
+    });
+  });
+
+  /* ---------- step 3: error spotting ---------- */
+  var paperLines = Array.prototype.slice.call(document.querySelectorAll('.step[data-step="3"] .pline[data-err]'));
+  paperLines.forEach(function(el){
+    el.addEventListener('click', function(){
+      if (checked3) return;
+      el.classList.toggle('sel');
+      el.querySelector('.mk').textContent = el.classList.contains('sel') ? '⚑ отмечено' : '⚑';
+    });
+  });
+
+  function checkStep3(){
+    checked3 = true;
+    errFound = 0; errFalse = 0;
+    paperLines.forEach(function(el){
+      var isErr = el.dataset.err === '1';
+      var sel = el.classList.contains('sel');
+      el.style.cursor = 'default';
+      if (isErr && sel) { errFound++; el.classList.remove('sel'); el.classList.add('okf','show-why'); el.querySelector('.mk').textContent = window.innerWidth <= 480 ? '✓' : '✓ верно'; }
+      else if (isErr && !sel) { el.classList.add('missf','show-why'); el.querySelector('.mk').textContent = window.innerWidth <= 480 ? '✕' : '✕ пропущено'; }
+      else if (!isErr && sel) { errFalse++; el.classList.remove('sel'); el.classList.add('falsef'); el.querySelector('.mk').textContent = window.innerWidth <= 480 ? '⚠' : '⚠ не ошибка'; }
+      else { el.querySelector('.mk').textContent = window.innerWidth <= 480 ? '—' : '— чисто'; }
+    });
+
+    var banner = document.getElementById('resBanner');
+    if (errFound === 3 && errFalse === 0) {
+      banner.className = 'banner good';
+      banner.innerHTML = '<span>🏆</span><span><b>Все ошибки найдены</b> (период, состав приложений, дата), ложных тревог нет.</span>';
+    } else {
+      banner.className = 'banner warn';
+      banner.innerHTML = '<span>⚠️</span><span><b>В документе было 3 строки с ошибками.</b> Найдено: ' + errFound + (errFalse ? ', ложных отметок: ' + errFalse : '') + '. Разбор — прямо в строках документа.</span>';
+    }
+
+    var finalList = document.getElementById('finalList');
+    finalList.innerHTML = '';
+    var errPts = Math.max(0, errFound * 10 - errFalse * 5);
+    var rows = [
+      ['Промпт для заявления', promptPts() + ' / 40 баллов', promptPts() >= 32],
+      ['Проверка цифр', quizEarned + ' / 30 баллов', quizEarned >= 25],
+      ['Поиск ошибок в документе', errPts + ' / 30 баллов', errPts >= 25],
+      ['Подсказки использовано', (3 - hintsLeft) + ' из 3', hintsLeft === 3]
+    ];
+    rows.forEach(function(r){
+      var row = document.createElement('div');
+      row.className = 'crit ' + (r[2] ? 'ok' : 'bad');
+      row.innerHTML = '<span class="ic">' + (r[2] ? '✓' : '·') + '</span><span class="lb">' + r[0] + '</span><span class="hintxt" style="display:block">' + r[1] + '</span>';
+      finalList.appendChild(row);
+    });
+    var ERRS = [
+      ['Период: расходы «в 2025 году»', 'Расходы произведены в 2026 году — заявление подают за текущий год.'],
+      ['Приложения неполные', 'По п. 10–11 Правил № 347н нужны документы о приобретении/выполнении и платежные документы.'],
+      ['Дата 30.02.2026 не существует', 'В феврале 2026 года 28 дней — типичная ошибка генерации.']
+    ];
+    var errLineIdx = 0;
+    paperLines.forEach(function(el){
+      if (el.dataset.err !== '1') return;
+      var e = ERRS[errLineIdx++];
+      var got = el.classList.contains('okf');
+      var row = document.createElement('div');
+      row.className = 'crit ' + (got ? 'ok' : 'bad');
+      row.innerHTML = '<span class="ic">' + (got ? '✓' : '✕') + '</span><span class="lb" style="white-space:normal">' + e[0] + '<span style="display:block;font-size:10.5px;color:#8c5a10;line-height:1.3">' + e[1] + '</span></span>';
+      finalList.appendChild(row);
+    });
+    var total = clamp(promptPts() + quizEarned + errPts, 0, 100);
+    var lvl = total >= 85 ? 'Эксперт' : total >= 60 ? 'Специалист' : 'Новичок';
+    document.getElementById('levelTag').textContent = lvl + ' · ' + total + '%';
+    if (window.innerWidth <= 720) {
+      s3step.dataset.tab = 'res';
+      document.querySelectorAll('#s3tabs .btn').forEach(function(x){
+        x.classList.toggle('primary', x.dataset.tab === 'res');
+        x.classList.toggle('ghost', x.dataset.tab !== 'res');
+      });
+    }
+    updateScore();
+    refreshNextBtn();
+  }
+
+  /* ---------- step 3 tabs (narrow screens) ---------- */
+  var s3step = document.querySelector('.step[data-step="3"]');
+  Array.prototype.slice.call(document.querySelectorAll('#s3tabs .btn')).forEach(function(b){
+    b.addEventListener('click', function(){
+      s3step.dataset.tab = b.dataset.tab;
+      document.querySelectorAll('#s3tabs .btn').forEach(function(x){
+        x.classList.toggle('primary', x.dataset.tab === b.dataset.tab);
+        x.classList.toggle('ghost', x.dataset.tab !== b.dataset.tab);
+      });
+    });
+  });
+
+  /* ---------- navigation / restart ---------- */
+  var warnTimer = null;
+  function warnGate(msg, els){
+    ftrHint.textContent = msg;
+    (els || []).forEach(function(el){
+      el.style.background = '#fff8ec';
+      setTimeout(function(){ el.style.background = ''; }, 1800);
+    });
+    clearTimeout(warnTimer);
+    warnTimer = setTimeout(function(){ ftrHint.textContent = stepNames[cur - 1]; }, 5000);
+  }
+  btnNext.addEventListener('click', function(){
+    if (cur === 1) {
+      var okc = update();
+      if (okc < MIN_PROMPT) {
+        warnGate('Выполнено ' + okc + ' из ' + CRIT.length + ' критериев — для генерации нужно минимум ' + MIN_PROMPT + '. Пропущенные критерии подсвечены.',
+          CRIT.filter(function(c){ return !c.el.classList.contains('ok'); }).map(function(c){ return c.el; }));
+        return;
+      }
+      showStep(2);
+    } else if (cur === 2) {
+      if (quizAnswered < 4) {
+        warnGate('Ответьте на все 4 вопроса сверки — осталось ' + (4 - quizAnswered) + '.',
+          Array.prototype.slice.call(document.querySelectorAll('.quiz')).filter(function(q){ return q.dataset.done !== '1'; }));
+        return;
+      }
+      showStep(3);
+    } else {
+      if (!checked3) { checkStep3(); return; }
+      restart();
+    }
+  });
+
+  function restart(){
+    checked3 = false;
+    s3step.dataset.tab = 'doc';
+    document.querySelectorAll('#s3tabs .btn').forEach(function(x){
+      x.classList.toggle('primary', x.dataset.tab === 'doc');
+      x.classList.toggle('ghost', x.dataset.tab !== 'doc');
+    });
+    quizEarned = 0; quizAnswered = 0; errFound = 0; errFalse = 0;
+    hintsLeft = 3;
+    document.getElementById('hintsLeft').textContent = '3';
+    ta.value = '';
+    document.querySelectorAll('.quiz').forEach(function(q){
+      q.dataset.done = '0';
+      q.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('right','wrong','locked'); });
+    });
+    paperLines.forEach(function(el){
+      el.classList.remove('sel','okf','missf','falsef','show-why');
+      el.style.cursor = '';
+      el.querySelector('.mk').textContent = '⚑';
+    });
+    document.getElementById('finalList').innerHTML = '';
+    document.getElementById('resBanner').className = 'banner';
+    document.getElementById('resBanner').innerHTML = '🔎 <span>Во фрагменте <b>3 строки с ошибками</b>. Отметьте их флажками. Строка с цифрами заблокирована — цифры вы уже проверили.</span>';
+    cheatOverlay.classList.remove('show');
+    update();
+    maxVisited = 1;
+    showStep(1);
+  }
+
+  update();
+  showStep(1);
+})();
+</script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
